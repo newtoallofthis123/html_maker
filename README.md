@@ -29,8 +29,7 @@ But with this library, you can write it like this:
 func handler(w http.ResponseWriter, r *http.Request) {
     tag := htmlmaker.New("div")
     
-    tag.AddChild(htmlmaker.New("p"))
-    tag.Children[0].SetBody("Hello")
+    tag.AddChild(htmlmaker.New("p").SetBody("Hello"))
     
     fmt.Fprintf(w, tag.Convert())
 }
@@ -44,8 +43,7 @@ Know I know this would seem like a lot of work, but it's not. You can just creat
 func Person(name string) *htmlmaker.Tag {
     tag := htmlmaker.New("div")
     
-    tag.AddChild(htmlmaker.New("p"))
-    tag.Children[0].SetBody("Hello " + name)
+    tag.AddChild(htmlmaker.New("p").SetBody("Hello " + name))
     
     return tag
 }
@@ -73,13 +71,8 @@ func main() {
     // Create a new tag
     tag := htmlmaker.New("div")
     
-    // Add a class to the tag
-    tag.AddChild(htmlmaker.New("a"))
-    
-    // Manipulate the attributes of the tag
-    tag.Children[0].SetBody("Google")
-    tag.Children[0].AddAttr("href", "https://google.com")
-    tag.Children[0].AddClasses([]string{"class1", "class2"})
+    // Add a to the tag
+    tag.AddChild(htmlmaker.New("a").AddAttr("href", "https://google.com").AddClasses([]string{"class1", "class2"}).SetBody("Google"))
     
     // Add a new tag to the tag
     tag.AddChild(htmlmaker.New("p"))
@@ -101,31 +94,31 @@ Output:
 
 This library is so small and simple, yet I end up using quite a lot. So here's a mini documentation for ease of use.
 
-### `New(tag string) *Tag`
+### `New(tag string) *HtmlTag`
 
 Creates a new tag with the tag name `tag`.
 
-### `AddChild(child *Tag)`
+### `AddChild(child *HtmlTag) *HtmlTag`
 
 Adds a child to the tag.
 
-### `SetBody(body string)`
+### `SetBody(body string) *HtmlTag`
 
 Sets the body of the tag.
 
-### `AddAttr(key string, value string)`
+### `AddAttr(key string, value string) *HtmlTag`
 
 Adds an attribute to the tag.
 
-### `AddClasses(classes []string)`
+### `AddClasses(classes []string) *HtmlTag`
 
 Adds classes to the tag.
 
-### `AddClass(class string)`
+### `AddClass(class string) *HtmlTag`
 
 Adds a class to the tag.
 
-### `AddStyle(key string, value string)`
+### `AddStyle(key string, value string) *HtmlTag`
 
 Adds a style to the tag.
 

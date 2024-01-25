@@ -32,13 +32,7 @@ func TestClasses(t *testing.T) {
 
 func TestFullTag(t *testing.T) {
 	toGet := "<p style=\"color: red;\" id=\"id1\" class=\"class1 class2 class3\">Hello</p>"
-	tag := htmlmaker.New("p")
-	tag.SetBody("Hello")
-	tag.AddClass("class1")
-	tag.AddClass("class2")
-	tag.AddClass("class3")
-	tag.AddAttr("style", "color: red;")
-	tag.SetId("id1")
+	tag := htmlmaker.New("p").AddClasses([]string{"class1", "class2", "class3"}).AddStyle("color", "red").SetId("id1").SetBody("Hello")
 
 	if tag.Convert() != toGet {
 		t.Errorf("Expected %s, got %s", toGet, tag.Convert())
@@ -48,8 +42,7 @@ func TestFullTag(t *testing.T) {
 func TestNestedTags(t *testing.T) {
 	toGet := "<div><p>Hello</p></div>"
 	tag := htmlmaker.New("div")
-	tag.AddChild(htmlmaker.New("p"))
-	tag.Children[0].SetBody("Hello")
+	tag.AddChild(htmlmaker.New("p").SetBody("Hello"))
 
 	if tag.Convert() != toGet {
 		t.Errorf("Expected %s, got %s", toGet, tag.Convert())
@@ -60,12 +53,8 @@ func TestComplex(t *testing.T) {
 	toGet := "<div><a href=\"https://google.com\" class=\"class1 class2\">Google</a><p>Hello</p></div>"
 
 	tag := htmlmaker.New("div")
-	tag.AddChild(htmlmaker.New("a"))
-	tag.Children[0].SetBody("Google")
-	tag.Children[0].AddAttr("href", "https://google.com")
-	tag.Children[0].AddClasses([]string{"class1", "class2"})
-	tag.AddChild(htmlmaker.New("p"))
-	tag.Children[1].SetBody("Hello")
+	tag.AddChild(htmlmaker.New("a").AddAttr("href", "https://google.com").AddClasses([]string{"class1", "class2"}).SetBody("Google"))
+	tag.AddChild(htmlmaker.New("p").SetBody("Hello"))
 
 	if tag.Convert() != toGet {
 		t.Errorf("Expected %s, got %s", toGet, tag.Convert())

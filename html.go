@@ -18,45 +18,59 @@ type HtmlTag struct {
 
 // New creates a new HtmlTag with the given tag type.
 // Tag type can be anything, but it is recommended to use the standard HTML tags.
-func New(tag TagType) HtmlTag {
-	return HtmlTag{
+func New(tag TagType) *HtmlTag {
+	return &HtmlTag{
 		TagType: tag,
 		Attrs:   make(map[string]string),
 	}
 }
 
 // AddChild adds a child to the HtmlTag.
-func (t *HtmlTag) AddChild(tag HtmlTag) {
-	t.Children = append(t.Children, tag)
+func (t *HtmlTag) AddChild(tag *HtmlTag) *HtmlTag {
+	t.Children = append(t.Children, *tag)
+
+	return t
 }
 
 // AddAttr adds an attribute to the HtmlTag.
 // The key is the attribute name, and the value is the attribute value.
-func (t *HtmlTag) AddAttr(key, value string) {
+func (t *HtmlTag) AddAttr(key, value string) *HtmlTag {
 	t.Attrs[key] = value
+
+	return t
 }
 
 // AddClass adds a class name to the HtmlTag.
-func (t *HtmlTag) AddClass(className string) {
+func (t *HtmlTag) AddClass(className string) *HtmlTag {
 	t.ClassNames = append(t.ClassNames, className)
+
+	return t
 }
 
-func (t *HtmlTag) AddStyle(key, value string) {
+func (t *HtmlTag) AddStyle(key, value string) *HtmlTag {
 	t.Attrs["style"] = key + ": " + value + ";"
+
+	return t
 }
 
-func (t *HtmlTag) AddClasses(classNames []string) {
+func (t *HtmlTag) AddClasses(classNames []string) *HtmlTag {
 	t.ClassNames = append(t.ClassNames, classNames...)
+
+	return t
 }
 
 // SetBody sets the body of the HtmlTag.
-func (t *HtmlTag) SetBody(body string) {
+func (t *HtmlTag) SetBody(body string) *HtmlTag {
 	t.Body = body
+
+	return t
 }
 
 // SetId sets the ID of the HtmlTag.
-func (t *HtmlTag) SetId(id string) {
+func (t *HtmlTag) SetId(id string) *HtmlTag {
 	t.Id = id
+
+	return t
 }
 
 // partialConvert converts the HtmlTag into a string without the body or children.
