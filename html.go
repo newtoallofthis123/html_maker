@@ -1,5 +1,6 @@
 package htmlmaker
 
+// TagType is the type of tag
 type TagType string
 
 // HtmlTag represents an HTML tag with its attributes, class names, children, body, and ID.
